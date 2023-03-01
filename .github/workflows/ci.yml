@@ -10,4 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - run: echo "${{ toJSON(github.event) }}"
+      - name: 1 minute delay
+        run: sleep 60
+
+      - run: echo "${{ github.event.pull_request.head.sha }}"
