@@ -17,6 +17,7 @@ jobs:
           echo "${{ github.event.pull_request.head.sha }}"
           echo "${{ github.event.pull_request.head.fork }}"
           echo "${{ github.event.label.name }}"
+          echo "${{ toJSON(github) }}"
 
       - uses: actions/checkout@v3
         with:
