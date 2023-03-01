@@ -4,10 +4,25 @@ on:
   pull_request_target:
     types: [labeled]
 
+  pull_request: ~
+
+  push:
+
 jobs:
   ci:
-    if: ${{ github.event.label.name == 'ci-approved' }}
+    if: ${{ !github.event.pull_request.head.repo.fork || github.event.label.name == 'ci-approved' || github.event_name == 'push' }}
     runs-on: ubuntu-latest
 
     steps:
-      - run: echo "${{ toJSON(github.event) }}"
+      - run: |
+          echo "${{ github.event_name }}"
+          echo "${{ github.event.pull_request.head.sha }}"
+          echo "${{ github.event.pull_request.head.repo.fork }}"
+          echo "${{ github.event.label.name }}"
+          echo "${{ toJSON(github) }}"
+
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - run: cat test
