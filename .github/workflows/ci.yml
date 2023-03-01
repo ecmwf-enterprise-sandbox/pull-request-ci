@@ -12,7 +12,7 @@ on:
 
 jobs:
   ci:
-    if: ${{ !github.event.pull_request.head.repo.fork || github.event.label.name == 'ci-approved' || !contains(['pull_request', 'pull_request_target'], github.event_name,) }}
+    if: ${{ !github.event.pull_request.head.repo.fork || github.event.label.name == 'ci-approved' || !contains(fromJSON('["pull_request", "pull_request_target"]'), github.event_name) }}
     runs-on: ubuntu-latest
 
     steps:
