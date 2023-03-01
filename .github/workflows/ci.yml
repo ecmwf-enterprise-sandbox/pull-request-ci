@@ -8,14 +8,14 @@ on:
 
 jobs:
   ci:
-    if: ${{ !github.event.pull_request.head.fork || github.event.label.name == 'ci-approved' }}
+    if: ${{ !github.event.pull_request.head.repo.fork || github.event.label.name == 'ci-approved' }}
     runs-on: ubuntu-latest
 
     steps:
       - run: |
           echo "${{ github.event_name }}"
           echo "${{ github.event.pull_request.head.sha }}"
-          echo "${{ github.event.pull_request.head.fork }}"
+          echo "${{ github.event.pull_request.head.repo.fork }}"
           echo "${{ github.event.label.name }}"
           echo "${{ toJSON(github) }}"
 
