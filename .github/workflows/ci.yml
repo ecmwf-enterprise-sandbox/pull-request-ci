@@ -6,9 +6,11 @@ on:
 
   pull_request: ~
 
+  push:
+
 jobs:
   ci:
-    if: ${{ !github.event.pull_request.head.repo.fork || github.event.label.name == 'ci-approved' }}
+    if: ${{ !github.event.pull_request.head.repo.fork || github.event.label.name == 'ci-approved' || github.event_name == 'push' }}
     runs-on: ubuntu-latest
 
     steps:
