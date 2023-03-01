@@ -24,7 +24,7 @@ jobs:
         run: |
           curl -w "%{http_code}\\n" -L \
           -X DELETE \
-          -H "Authorization: token ${{ secrets.REPO_TOKEN }}" \
+          -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
           --url https://api.github.com/repos/ecmwf-enterprise-sandbox/pull-request-ci/issues/${{ github.event.number }}/labels/ci-approved
 
   ci:
