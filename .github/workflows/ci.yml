@@ -1,0 +1,13 @@
+name: ci
+
+on:
+  pull_request_target:
+    types: [labeled]
+
+jobs:
+  ci:
+    if: ${{ github.event.label.name == 'ci-approved' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: echo "${{ toJSON(github.event) }}"
