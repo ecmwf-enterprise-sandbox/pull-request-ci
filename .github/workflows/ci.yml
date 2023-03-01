@@ -31,7 +31,7 @@ jobs:
       - name: Remove PR label
         if: ${{ github.event_name == 'pull_request_target' }}
         run: |
-          curl -L \
+          curl -w "%{http_code}\\n" -L \
           -X DELETE \
           -H "Accept: application/vnd.github+json" \
           -H "Authorization: Bearer ${{ github.token }}"\
