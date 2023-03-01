@@ -4,15 +4,14 @@ on:
   pull_request_target:
     types: [labeled]
 
+  pull_request: ~
+
 jobs:
   ci:
-    if: ${{ github.event.label.name == 'ci-approved' }}
+    if: ${{ !github.event.pull_request.head.fork || github.event.label.name == 'ci-approved' }}
     runs-on: ubuntu-latest
 
     steps:
-      - name: 1 minute delay
-        run: sleep 60
-
       - run: echo "${{ github.event.pull_request.head.sha }}"
 
       - uses: actions/checkout@v3
