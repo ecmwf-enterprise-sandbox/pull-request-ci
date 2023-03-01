@@ -29,7 +29,7 @@ jobs:
           echo "${{ toJSON(github) }}"
 
       - name: Remove PR label
-        if: ${{ github.event_name == "pull_request_target" }}
+        if: ${{ github.event_name == 'pull_request_target' }}
         run: |
           curl -L \
           -X DELETE \
