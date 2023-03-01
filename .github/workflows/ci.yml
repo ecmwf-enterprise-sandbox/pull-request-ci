@@ -15,20 +15,11 @@ on:
   workflow_dispatch: ~
 
 jobs:
-  pr-label:
-    if: ${{ !github.event.pull_request.head.repo.fork || github.event.label.name == 'ci-approved'}}
+  remove-pr-label:
+    if: ${{ github.event.label.name == 'ci-approved' }}
     runs-on: ubuntu-latest
-    permissions:
-      pull-requests: write
     steps:
-      - run: |
-          echo "${{ github.event_name }}"
-          echo "${{ github.event.pull_request.head.sha }}"
-          echo "${{ github.event.pull_request.head.repo.fork }}"
-          echo "${{ github.event.label.name }}"
-          echo "${{ toJSON(github) }}"
-
-      - name: Remove PR label
+      - name: Remove PR label # this will be a separate github action
         if: ${{ github.event_name == 'pull_request_target' }}
         run: |
           curl -w "%{http_code}\\n" -L \
@@ -38,10 +29,7 @@ jobs:
 
   ci:
     runs-on: ubuntu-latest
-    needs: [pr-label] # if labeler is skipped => triggered by unapproved public PR => this job is skipped as well
+    if: ${{ !github.event.pull_request.head.repo.fork || github.event.label.name == 'ci-approved' }}
     steps:
-      - uses: actions/checkout@v3
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
-
-      - run: cat test
+      - name: run CI
+        run: echo "CI"
