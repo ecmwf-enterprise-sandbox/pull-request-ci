@@ -12,7 +12,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - run: echo "${{ github.event.pull_request.head.sha }}"
+      - run: |
+          echo "${{ github.event_name }}"
+          echo "${{ github.event.pull_request.head.sha }}"
+          echo "${{ github.event.pull_request.head.fork }}"
+          echo "${{ github.event.label.name }}"
 
       - uses: actions/checkout@v3
         with:
