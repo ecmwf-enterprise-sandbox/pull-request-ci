@@ -19,7 +19,7 @@ jobs:
           action: add
 
       - name: Remove label `approved-for-ci`
-        if: ${{ github.event.action == 'synchronize' }}
+        if: ${{ github.event.action == 'synchronize' && contains(github.event.pull_request.labels.*.name, 'approved-for-ci') }}
         uses: ecmwf-actions/labeler@v1
         with:
           issue: ${{ github.event.number }}
