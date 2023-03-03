@@ -17,7 +17,7 @@ on:
 jobs:
   ci:
     runs-on: ubuntu-latest
-    if: ${{ !github.event.pull_request.head.repo.fork && github.event.action != 'labeled' || github.event.label.name == 'ci-approved' }}
+    if: ${{ !github.event.pull_request.head.repo.fork && github.event.action != 'labeled' || github.event.label.name == 'approved-for-ci' }}
     steps:
       - name: run CI
         run: echo "CI"
