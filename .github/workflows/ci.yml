@@ -15,21 +15,9 @@ on:
   workflow_dispatch: ~
 
 jobs:
-  remove-pr-label:
-    if: ${{ github.event.label.name == 'ci-approved' }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Remove PR label # this will be a separate github action
-        if: ${{ github.event_name == 'pull_request_target' }}
-        run: |
-          curl -w "%{http_code}\\n" -L \
-          -X DELETE \
-          -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-          --url https://api.github.com/repos/ecmwf-enterprise-sandbox/pull-request-ci/issues/${{ github.event.number }}/labels/ci-approved
-
   ci:
     runs-on: ubuntu-latest
-    if: ${{ !github.event.pull_request.head.repo.fork || github.event.label.name == 'ci-approved' }}
+    if: ${{ !github.event.pull_request.head.repo.fork && github.event.action != 'labeled' || github.event.label.name == 'ci-approved' }}
     steps:
       - name: run CI
         run: echo "CI"
